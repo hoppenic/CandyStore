@@ -46,6 +46,19 @@ namespace CandyStore.Controllers
             });
 
         }
+        public IActionResult Details(int? id)
+        {
+            if (id.HasValue)
+            {
+                Product p = _products.Single(x => x.ID == id.Value);
+                return View(p);
+            }
+            return NotFound();
+
+            
+            return View(_products);
+        }
+
         public IActionResult Index()
         {
             return View(_products);
