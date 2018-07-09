@@ -16,11 +16,39 @@ namespace CandyStore.Controllers
         //this is a constructor
         public ProductController()
         {
+            //using hard coded data for now to mock up prods
+
+            _products = new List<Product>();
+            _products.Add(new Product
+            {
+
+                ID=1,
+                Name="Chocolate Bar",
+                Description="Dark Chocolate",
+                Image="",
+                Price=3.99m
+
+
+            });
+
+            _products.Add(new Product
+            {
+
+                ID = 2,
+                Name = "Gummy Bears",
+                Description = "Various Flavors of Gummy Bears",
+                Image = "",
+                Price = 5.99m
+
+
+
+
+            });
 
         }
         public IActionResult Index()
         {
-            return View();
+            return View(_products);
         }
     }
 }
