@@ -2,19 +2,18 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using CandyStore.Models;
 using System.ComponentModel.DataAnnotations;
 
-namespace CandyStore.ViewModels
+
+namespace CandyStore.Models
 {
     public class RegisterViewModel
     {
-        
         [Required]
         public string UserName { get; set; }
 
         [Required]
-        [MinLength(8,ErrorMessage ="Must be at least 8 characters")]
+        [MinLength(8, ErrorMessage = "Must be at least 8 characters")]
         public string Password { get; set; }
 
         [Required]
@@ -25,10 +24,11 @@ namespace CandyStore.ViewModels
         public string PhoneNumber { get; set; }
 
         [Required]
-        public string  FirstName { get; set; }
+        public string FirstName { get; set; }
 
         [Required]
         public string LastName { get; set; }
+
 
 
 

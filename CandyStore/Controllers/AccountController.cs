@@ -28,7 +28,14 @@ namespace CandyStore.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Register(string username, string password)
         {
-            return Ok();
+
+            if (ModelState.IsValid)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            return View();
+          
+           
         }
 
 

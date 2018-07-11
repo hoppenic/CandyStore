@@ -56,7 +56,7 @@ namespace CandyStore.Controllers
             return NotFound();
 
             
-            return View(_products);
+            
         }
 
         public IActionResult Index()
