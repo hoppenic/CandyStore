@@ -6,6 +6,10 @@
 
 <div class="container-fluid">
 
+    <script>
+        window.alert("Welcome to Nick's Candy Store")
+    </script>
+
 
     <div class="row">
         <div class="col-lg-12 col-md-4">        
@@ -34,6 +38,7 @@
     <div class="row">
         <div class="col-lg-12 col-md-4">
             @* using a function to change fontsize here*@
+            @* functions have to be within script tags*@
             <script>
                 function nicksFunction() {
                     document.getElementById("sizeChg").style.fontSize="20px"
@@ -41,7 +46,7 @@
             </script>
 
       
-            <p id="sizeChg">Make this change using a JS function</p>
+            <h3 id="sizeChg">Make this change using a JS function</h3>
             <button type="button" onclick="nicksFunction()">Try from Here</button>
 
 
