@@ -10,9 +10,9 @@ namespace CandyStore.Controllers
 {
     public class AccountController : Controller
     {
-        SignInManager<IdentityUser> _signInManager;
+        SignInManager<CandyStoreUser> _signInManager;
 
-        public AccountController(SignInManager<IdentityUser> signInManager)
+        public AccountController(SignInManager<CandyStoreUser> signInManager)
         {
             _signInManager = signInManager;
 
@@ -38,7 +38,14 @@ namespace CandyStore.Controllers
 
             if (ModelState.IsValid)
             {
-                IdentityUser newUser = new IdentityUser(model.UserName);
+                CandyStoreUser newUser = new CandyStoreUser
+                {
+                    UserName = model.UserName,
+                    Email = model.Email,
+                    FirstName = model.FirstName,
+                    LastName = model.LastName,
+                    PhoneNumber = model.PhoneNumber
+                };
 
                 IdentityResult creationResult = _signInManager.UserManager.CreateAsync(newUser).Result;
 
@@ -91,7 +98,7 @@ namespace CandyStore.Controllers
 
             if (ModelState.IsValid)
             {
-                IdentityUser existingUser = _signInManager.UserManager.FindByNameAsync(model.UserName).Result;
+                CandyStoreUser existingUser = _signInManager.UserManager.FindByNameAsync(model.UserName).Result;
                 if(existingUser != null)
                 {
                     Microsoft.AspNetCore.Identity.SignInResult passwordResult = _signInManager.CheckPasswordSignInAsync(existingUser, model.Password, false).Result;

@@ -9,9 +9,33 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CandyStore.Models
 {
-    public class CandyStoreDbContext
+    //class, inheriting from IdentityDbContext
+    public class CandyStoreDbContext : IdentityDbContext<CandyStoreUser>
     {
 
+        //constructor
+        public CandyStoreDbContext(): base()
+        {
 
+        }
+
+
+        public CandyStoreDbContext(DbContextOptions options): base(options)
+        {
+
+
+        }
+
+        public DbSet<Product> Products { get; set; }
+    
+
+    }
+
+    //public class, inheriting from IdentityUser
+    public class CandyStoreUser : IdentityUser
+    {
+
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
     }
 }

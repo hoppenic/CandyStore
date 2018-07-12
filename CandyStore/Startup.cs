@@ -26,9 +26,12 @@ namespace CandyStore
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<IdentityDbContext>(opt => opt.UseInMemoryDatabase("Identities"));
-            services.AddIdentity<IdentityUser, IdentityRole>()
-                .AddEntityFrameworkStores<IdentityDbContext>()
+            string CandyStoreConnectionString = Configuration.GetConnectionString("CandyStore");
+            services.AddDbContext<CandyStoreDbContext>(opt => opt.UseSqlServer(CandyStoreConnectionString));
+
+            //not putting any of the password options in here
+            services.AddIdentity<CandyStoreUser, IdentityRole>()
+                .AddEntityFrameworkStores<CandyStoreDbContext>()
                 .AddDefaultTokenProviders();
             services.AddMvc();
         }
