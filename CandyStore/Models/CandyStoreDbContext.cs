@@ -35,6 +35,29 @@ namespace CandyStore.Models
         public DbSet<CartItem> CartItems { get; set; }
 
 
+    }
+
+    public class Cart
+    {
+        //constructor
+        public Cart()
+        {
+            this.CartItems = new HashSet<CartItem>();
+        }
+
+        public int ID { get; set; }
+        public Guid CookieIdentifier { get; set; }
+        public DateTime LastModified { get; set; }
+        public ICollection<CartItem> CartItems { get; set; }
+
+    }
+
+    public class CartItem
+    {
+        public int ID { get; set; }
+        public Cart Cart { get; set; }
+        public Product Product { get; set; }
+        public int Quantity { get; set; }
 
     }
 
