@@ -26,8 +26,15 @@ namespace CandyStore.Models
 
         }
 
+        
         public DbSet<Product> Products { get; set; }
-    
+
+        //Dbset called Carts that inherits from the Cart class
+        public DbSet<Cart> Carts { get; set; }
+        //Dbset called CartItems that inherts from CartItem class
+        public DbSet<CartItem> CartItems { get; set; }
+
+
 
     }
 
