@@ -41,5 +41,28 @@ namespace CandyStore.Controllers
 
             return View(cart);
         }
+
+        public IActionResult Remove(int id)
+        {
+            Guid cartId;
+            Cart cart = null;
+            if (Request.Cookies.ContainsKey("cartId"))
+            {
+                if(Guid.TryParse(Request.Cookies["cartId"], out cartId))
+                {
+                    cart = _candyStoreDbContext.Carts
+                        .Include(Carts => Carts.CartItems)
+                        .ThenInclude(CartItems => CartItems.Product)
+                        .FirstOrDefault(x => x.CookieIdentifier == cartId);
+                }
+            }
+            CartItem item = cart.CartItems.FirstOrDefault(x => x.ID == id);
+
+            cart.LastModified = DateTime.Now;
+
+            _candyStoreDbContext.CartItems.Remove(item);
+            _candyStoreDbContext.SaveChanges();
+            return RedirectToAction("Index");
+        }
     }
 }

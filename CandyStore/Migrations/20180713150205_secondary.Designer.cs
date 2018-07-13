@@ -11,9 +11,10 @@ using System;
 namespace CandyStore.Migrations
 {
     [DbContext(typeof(CandyStoreDbContext))]
-    partial class CandyStoreDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180713150205_secondary")]
+    partial class secondary
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

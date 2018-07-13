@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using CandyStore.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using Microsoft.EntityFrameworkCore;
 
 namespace CandyStore.Controllers
 {
@@ -31,15 +32,45 @@ namespace CandyStore.Controllers
             return View(products);
         }
 
-
-        public IActionResult Details(int? id)
+        [HttpPost]
+        public IActionResult Details(int? id,int quantity=1)
         {
-            if (id.HasValue)
+            Guid cartId;
+            Cart cart = null;
+            if (Request.Cookies.ContainsKey("cartId"))
             {
-                Product p = _candyStoreDbContext.Products.Find(id.Value);
-                return View(p);
+                if(Guid.TryParse(Request.Cookies["cartId"],out cartId))
+                {
+                    cart = _candyStoreDbContext.Carts
+                      .Include(Carts => Carts.CartItems)
+                      .ThenInclude(CartItems => CartItems.Product)
+                      .FirstOrDefault(x => x.CookieIdentifier == cartId);
+
+                }
             }
-            return NotFound();
+            if (cart == null)
+            {
+                cart = new Cart();
+                cartId = Guid.NewGuid();
+                cart.CookieIdentifier = cartId;
+
+                _candyStoreDbContext.Carts.Add(cart);
+                Response.Cookies.Append("cartId", cartId.ToString(), new Microsoft.AspNetCore.Http.CookieOptions { Expires = DateTime.UtcNow.AddYears(100) });
+            }
+
+            CartItem item = cart.CartItems.FirstOrDefault(x => x.Product.ID == id);
+            if (item == null)
+            {
+                item = new CartItem();
+                item.Product = _candyStoreDbContext.Products.Find(id);
+                cart.CartItems.Add(item);
+            }
+
+            item.Quantity += quantity;
+            cart.LastModified = DateTime.Now;
+
+            _candyStoreDbContext.SaveChanges();
+            return RedirectToAction("Index", "Cart");
 
             
             
